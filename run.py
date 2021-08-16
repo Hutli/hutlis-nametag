@@ -71,7 +71,7 @@ inky_display.set_image(img)
 inky_display.show()
 
 
-@app.get("/nametag/{name}", status_code=200)
+@app.get("/api/nametag/{name}", status_code=200)
 def read_item(name: str):
     for y in range(y_top, y_bottom):
         for x in range(0, inky_display.width):
