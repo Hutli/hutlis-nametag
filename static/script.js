@@ -12,7 +12,7 @@ function set_name() {
             output.innerHTML = xhr.response.replace(/\\r?\\n/g, '<br/>');
         }
     }
-    xhr.open('get', '/nametag/' + input.value, true);
+    xhr.open('get', '/api/nametag/' + input.value, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     xhr.send();
 }
