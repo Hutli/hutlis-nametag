@@ -56,5 +56,5 @@ for x in range(50):
 
 # Display the completed name badge
 
-inky_display.set_image(img)
-inky_display.show()
+# inky_display.set_image(img)
+# inky_display.show()
