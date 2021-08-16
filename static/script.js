@@ -6,10 +6,13 @@ function onload() {
 }
 function set_name() {
     var xhr = new XMLHttpRequest();
+    output.disabled = true;
+    var orig_value = output.value;
+    output.value = "Setting...";
     xhr.onreadystatechange = function () {
-        output.innerHTML = "Setting...";
         if (xhr.readyState === 4) {
-            output.innerHTML = xhr.response.replace(/\\r?\\n/g, '<br/>');
+            output.disabled = false;
+            output.value = orig_value;
         }
     }
     xhr.open('get', '/api/nametag/' + input.value, true);

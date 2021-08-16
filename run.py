@@ -28,7 +28,7 @@ img = Image.new("P", inky_display.resolution)
 draw = ImageDraw.Draw(img)
 
 # Load the fonts
-intuitive_font = ImageFont.truetype(Intuitive, 30)
+intuitive_font = ImageFont.truetype("./RobotoEmojiOne.ttf", 30)
 hanken_bold_font = ImageFont.truetype(HankenGroteskBold, 35)
 hanken_medium_font = ImageFont.truetype(HankenGroteskMedium, 16)
 
