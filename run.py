@@ -5,7 +5,7 @@ import argparse
 from PIL import Image, ImageFont, ImageDraw
 from font_hanken_grotesk import HankenGroteskBold, HankenGroteskMedium
 from font_intuitive import Intuitive
-from inky.auto import auto
+from inky import InkyPHAT
 from fastapi import FastAPI, Response, status
 from fastapi.responses import PlainTextResponse, HTMLResponse
 
@@ -13,7 +13,7 @@ from fastapi.responses import PlainTextResponse, HTMLResponse
 app = FastAPI()
 
 try:
-    inky_display = auto(ask_user=True, verbose=True)
+    inky_display = InkyPHAT('red')
 except TypeError:
     raise TypeError("You need to update the Inky library to >= v1.1.0")
 
@@ -71,39 +71,12 @@ inky_display.set_image(img)
 inky_display.show()
 
 
-@app.get('/', response_class=HTMLResponse)
-def index():
-    return '''
-    <script type="text/javascript">
-    var input;
-    var output;
-    function onload() { 
-        input = document.getElementById('input');
-        output = document.getElementById('output');
-    }
-    function set_name(){
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                output.innerHTML = xhr.response.replace(/\\r?\\n/g, '<br/>');
-            }
-        }
-        xhr.open('get', '/nametag/' + input.value, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        xhr.send();
-    }
-    </script>
-
-    <body onload="onload();">
-        <input type="text" name="enter" class="enter" value="" id="input"/>
-        <input type="button" value="click" onclick="set_name();"/>
-        <p id="output"></p>
-    </body>
-    '''
-
-
 @app.get("/nametag/{name}", status_code=200)
 def read_item(name: str):
+    for y in range(y_top, y_bottom):
+        for x in range(0, inky_display.width):
+            img.putpixel((x, y), inky_display.WHITE)
+
     # Calculate the positioning and draw the name text
     name_w, name_h = intuitive_font.getsize(name)
     name_x = int((inky_display.width - name_w) / 2)
@@ -113,3 +86,5 @@ def read_item(name: str):
     # Display the completed name badge
     inky_display.set_image(img)
     inky_display.show()
+
+    return "Done!"
