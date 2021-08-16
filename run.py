@@ -67,10 +67,6 @@ draw.text((mynameis_x, mynameis_y), "my name is",
           inky_display.WHITE, font=hanken_medium_font)
 
 
-inky_display.set_image(img)
-inky_display.show()
-
-
 @app.get("/api/nametag/{name}", status_code=200)
 def read_item(name: str):
     for y in range(y_top, y_bottom):
