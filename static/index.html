@@ -8,18 +8,17 @@
 
 <body onload="onload();">
     <div class="container">
-        <div class="row">
-            <div class="col-25">
-                <label for="fname">Name</label>
+        <div class="center">
+            <div class="row">
+                <div class="col-100">
+                    <input type="text" name="name" id="input" placeholder="Name">
+                </div>
             </div>
-            <div class="col-75">
-                <input type="text" name="name" id="input" placeholder="Name">
+            <div class="row">
+                <input type="button" value="Update" onclick="set_name();" />
             </div>
+            <p id="output"></p>
         </div>
-        <div class="row">
-            <input type="button" value="click" onclick="set_name();" />
-        </div>
-        <p id="output"></p>
     </div>
 </body>
 
