@@ -24,11 +24,11 @@ except NotImplementedError:
     pass
 
 # Create a new canvas to draw on
-img = Image.new("P", inky_display.resolution)
-draw = ImageDraw.Draw(img)
+img_clean = Image.new("P", inky_display.resolution)
+draw = ImageDraw.Draw(img_clean)
 
 # Load the fonts
-intuitive_font = ImageFont.truetype("./RobotoEmojiOne.ttf", 30)
+intuitive_font = ImageFont.truetype("./hutlis-font.ttf", 30)
 hanken_bold_font = ImageFont.truetype(HankenGroteskBold, 35)
 hanken_medium_font = ImageFont.truetype(HankenGroteskMedium, 16)
 
@@ -36,21 +36,21 @@ hanken_medium_font = ImageFont.truetype(HankenGroteskMedium, 16)
 y_top = int(inky_display.height * (5.0 / 10.0))
 y_bottom = y_top + int(inky_display.height * (4.0 / 10.0))
 
+
 # Draw the red, white, and red strips
 for y in range(0, y_top):
     for x in range(0, inky_display.width):
-        img.putpixel((x, y), inky_display.BLACK if inky_display.colour ==
-                     "black" else inky_display.RED)
+        img_clean.putpixel((x, y), inky_display.BLACK if inky_display.colour ==
+                           "black" else inky_display.RED)
 
 for y in range(y_top, y_bottom):
     for x in range(0, inky_display.width):
-        img.putpixel((x, y), inky_display.WHITE)
+        img_clean.putpixel((x, y), inky_display.WHITE)
 
 for y in range(y_bottom, inky_display.height):
     for x in range(0, inky_display.width):
-        img.putpixel((x, y), inky_display.BLACK if inky_display.colour ==
-                     "black" else inky_display.RED)
-
+        img_clean.putpixel((x, y), inky_display.BLACK if inky_display.colour ==
+                           "black" else inky_display.RED)
 
 # Calculate the positioning and draw the "Hello" text
 hello_w, hello_h = hanken_bold_font.getsize("Hello")
@@ -67,11 +67,10 @@ draw.text((mynameis_x, mynameis_y), "my name is",
           inky_display.WHITE, font=hanken_medium_font)
 
 
-@app.get("/api/nametag/{name}", status_code=200)
+@app.get("/api/nametag/{name:path}", status_code=200)
 def read_item(name: str):
-    for y in range(y_top, y_bottom):
-        for x in range(0, inky_display.width):
-            img.putpixel((x, y), inky_display.WHITE)
+    img = img_clean.copy()
+    draw = ImageDraw.Draw(img)
 
     # Calculate the positioning and draw the name text
     name_w, name_h = intuitive_font.getsize(name)
